@@ -1,0 +1,56 @@
+# Here is the Code I used to generate the Plots for the INX correlations
+
+# To import the data, you can use RStudio or I used the following:
+
+INX_data_for_Adriane <- read_csv("~/Desktop/INX Data for Adriane.csv") # Your filepath and filename may differ
+
+# DESCRIBE THE DATA: How many rows and columns are there?
+dim(INX_data_for_Adriane)
+
+# What are the columns?
+names(INX_data_for_Adriane)
+
+
+# What do these data look like?
+head(INX_data_for_Adriane)
+
+
+# ARRANGE DATA BY CELLTYPE AND CELLID
+arranged <- arrange(INX_data_for_Adriane, CellType, CellID)                   # arranged is a command in the dplyr package
+    options(max.print=10000)                                                  # I had to tell R I wanted a longer output to see it all
+    print(arranged, n=1000)                                                   # there are other ways to view data of course
+    
+# PLOT 1, quick and dirty INX1 vs INX2
+qplot(data=INX_data_for_Adriane, x=INX1, y=INX2)                              # qplot is a call in the ggplot2 package
+  # alternatively
+  xyplot(INX1~INX2, INX_data_for_Adriane)                                     # xyplot is a call in the lattice package
+
+# PLOT 2, Cell Type By Color
+ggplot(data=INX_data_for_Adriane, aes(x=INX1, y=INX2, color=CellType)) +      # we use an aesthetic because color is not a fixed value
+    geom_point(shape=1, size=4) +                                             # shape gives me the open circle, and I like them larger
+    labs(title="STG vs CG Cells for INX1 vs INX2")                            # labels the main title, coudl use this for axes too
+
+# PLOT 3, Cell Type By Color, add regression lines
+ggplot(data=INX_data_for_Adriane, aes(x=INX1, y=INX2, color=CellType)) +
+     geom_point(shape=1, size=4)+geom_smooth(method=lm, se=FALSE) +           # add the fit line using the "lm" method, and no confidence intervals
+     labs(title="STG vs CG Cells for INX1 vs INX2")
+
+# PLOT 4, Cell Type By Shape, Cell Identity By Color
+ggplot(data=INX_data_for_Adriane, aes(x=INX1, y=INX2, shape=CellType)) +
+      geom_point(aes(color=INX_data_for_Adriane$CellID), size=4) +            # we add an aesthetic for the points based on cell ID
+      geom_smooth(method=lm, se=FALSE, aes(color=CellType)) +                 # a second aesthetic for the color based on cell type
+      labs(title="STG vs CG Cells for INX1 vs INX2”)
+
+# PLOT 5, Boxplot of INX3 levels
+ggplot(data=INX_data_for_Adriane, aes(x=CellType, y=INX3,  fill=CellType)) +  # also note fill color by CellType
+      geom_boxplot(outlier.shape=1, outlier.color="black", outlier.size=4) +  # specifying boxplot and some features to make it look nice
+      labs(title="INX3 by Cell Type")
+
+# PLOT 6, INX2 Boxplots By Cell Type and Cell ID
+ggplot(data=INX_data_for_Adriane, aes(x=CellType, y=INX2,  fill=CellID)) +    # by simply changing the "fill" argument, I get a very different plot
+      geom_boxplot(outlier.shape=1, outlier.color="black", outlier.size=4) +
+      labs(title="INX2 by Cell Type and CEll ID")
+
+
+
+
