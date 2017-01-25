@@ -1,0 +1,24 @@
+
+Hello all,
+
+Here’s what I have put together for R Club homework for next week.  It focuses fairly heavily on exploratory data analysis and plotting.  Attached you will find a comma-delimited (.csv) file with data on Innexin expression in both STG and CG cells.  Please use these data for the exercises.  
+
+Also attached are several plots that I’d like you to try to replicate (see below).  
+
+TRY TO IMPORT THE DATA INTO R DIRECTLY, without looking at the spreadsheet first.  In other words, don’t open it in Excel and check it out.  Rather, after importing it into R, answer the following questions:
+
+1.  How many rows and columns are present in the data?
+2.  What are the column names for the data (I.e. What data are in this spreadsheet)?
+3. What do the data look like?  Which columns are integers and which are strings? 
+4.  The data are mixed in terms of their cell types and cell identities.  Can you sort the data sheet by Cell Type and Cell ID?  Print (to the screen) the entire data set after sorting it.
+5.  Plot a scatterplot of INX1 vs. INX2 for all the data combined (this is Plot 1).
+6.  Plot a scatterplot of INX1 vs. INX2 for all the data combined, but separate the Cell Types (STG vs CG) with different colors (this is Plot 2).
+7.  Add regression lines to the scatterplots by Cell Type (this is Plot 3).
+8.  Plot the same scatterplot, with the regression lines, but identify Cell Type (CellType) by the SHAPE of the points, and identify Cell Identity (CellID) with different colors.  (this is Plot 4)
+9.  Plot of Boxplot (box and whiskers) for INX3 separated by Cell Type (STG vs CG).  Color the boxes by Cell Type, and try to match the formatting of the outliers and points in my plot if you like (Plot 5).
+10.  Plot Boxpots of INX2 and separate Cell Type on the X-xis, and separate by Cell ID in different colors (this is Plot 6).
+
+This should be a good exercise to get us going. Don’t forget to push your code to your specific folder on Github so we can all look at one another’s code on Monday.  
+
+Let me know what I can clarify. 
+
