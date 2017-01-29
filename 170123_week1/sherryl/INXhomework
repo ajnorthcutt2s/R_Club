@@ -1,0 +1,37 @@
+clubdat <-read_csv("~/R_Club/R-ClubINXdata.csv") #turned csv file into dataframe                                                       named clubdat
+
+
+Str(clubdat)        #listed contents of dataframe: 86 rows 7 columns, Column names                         AdrianeCode, SchulzCode, CellID, and CellType are strings while                       INX1, INX2, and INX3 are integer vectors
+
+
+celldat <- clubdat %>% arrange(CellType, CellID) %>% print() #celldat: dataframe                                                                   arranged by CellType                                                                 and CellID 
+
+
+Sp <- ggplot(celldat,aes(x=INX1, y=INX2)) + geom_point(size=1)  #INX1 vs INX2
+
+
+Sp2 <- ggplot(celldat,aes(x=INX1, y=INX2, color=CellType)) + geom_point(size=1)
+            
+                        #INX1 vs INX2 by cellType
+                        
+                        
+Sp3 <- ggplot(celldat,aes(x=INX1, y=INX2, color=CellType)) + geom_point(size=2) + geom_smooth(method = lm, se=FALSE)
+
+                                  #INX1 vs INX2 by cellType w/ regression lines
+                                  
+                                  
+Sp4 <- ggplot(celldat,aes(x=INX1, y=INX2, shape=CellType)) + geom_point(size=2, aes(color=CellID)) + geom_smooth(method = lm, se=FALSE, aes(color=CellType))
+
+                  #INX1 vs INX2 CellType by shape and CellID by color
+                  
+              
+box <- ggplot(celldat,aes(x=CellType, y=INX3, fill=CellType)) + geom_boxplot(shape=1,color="black",size=1)
+
+                                #Box and whisker INX3 by CellType
+                                
+                                
+box2 <- ggplot(celldat,aes(x=CellType, y=INX2, fill=CellID)) + geom_boxplot(shape=1,color="black",size=1)
+
+                                #Box and whisker INX2 by CellID and CellType
+                                
+                                
