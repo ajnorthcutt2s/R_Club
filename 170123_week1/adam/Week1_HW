@@ -1,0 +1,188 @@
+I importated the dataset into RStudio using File:Import Dataset.  This prompted an installation necessary to import files. 
+Once that finished, I selected the downloaded csv (comma separated values) file for the data that Dave provided.  
+Once the data was imported, a new window opened containing a spreadsheet of R_ClubINXdata values. 
+Also, the global environment updated showing data had been added.  From here I could start answering questions.
+
+1.  How many rows and columns are present in the data?
+  After importing the data, RStudio automatically ran the command View(R_ClubINXdata), generating the new data table window.
+  I could simply count the rows and columns in the table, but if there were 1000s (particularly for the columns), this could be quite a task.
+  The global environment stated that R_ClubINXdata contained 86 obs. (obsertaions) of 7 values, meaning 86 rows with 7 columns. 
+  nrow(R_ClubINXdata) and ncol(R_ClubINXdata) also achieves this.
+  
+  
+2.  What are the column names for the data (I.e. What data are in this spreadsheet)?
+    > colnames(R_ClubINXdata)
+[1] "AdrianeCode" "SchulzCode"  "CellID"      "CellType"    "INX1"        "INX2"        "INX3"  
+
+3. What do the data look like?  Which columns are integers and which are strings? 
+   > print(R_ClubINXdata)
+# A tibble: 86 × 7
+      AdrianeCode   SchulzCode   CellID CellType  INX1  INX2  INX3
+            <chr>        <chr>    <chr>    <chr> <int> <int> <int>
+1      869_040 LG        #1 LG       LG      STG 37155 13163  9031
+2      869_042 MG       #10 MG       MG      STG  2664  1096   652
+3      869_045 MG       #11 MG       MG      STG  1981   714   735
+4      869_046 MG       #12 MG       MG      STG  1544   480   433
+5      869_041 IC       #13 IC       IC      STG 24366  9014  6937
+6      869_042 IC       #14 IC       IC      STG  4425  2066  1171
+7  869_044 neurop #15 Neuropil neuropil      STG 55180 23294 18436
+8  869_046 neurop #17 Neuropil neuropil      STG 15551  7126  3998
+9      869_038 LG       #18 LG       LG      STG 14740  5689  4059
+10     869_043 IC       #19 IC       IC      STG  6726  2806  2286
+# ... with 76 more rows
+
+  This command, while not very elegant, gives a holistic look at the data while also showing which columns contain strings (<chr>) or integers (<int>).
+  
+  
+ 4.  The data are mixed in terms of their cell types and cell identities.  Can you sort the data sheet by Cell Type and Cell ID?  
+ Print (to the screen) the entire data set after sorting it.
+ 
+ I tried:
+ Sorted_R_ClubINXdata <- with(R_ClubINXdata, R_ClubINXdata[arrange("CellType", "CellID") , ])
+ But this only populated Sorted_R_ClubINXdata with the top row (and column headers).
+ 
+ I realized I was making this more complicated than it needed to be and used arrange instead.
+ 
+ > Sorted_R_ClubINXdata <- arrange(R_ClubINXdata, CellType,CellID)
+
+I thought I could print the entire sorted data table with:
+> print(Sorted_R_ClubINXdata, nrow=100)
+but this still only printed the first 10 rows. So I adjusted the max.print setting.
+> options(max.print = 100000)
+> print(Sorted_R_ClubINXdata, n=1000)
+# A tibble: 86 × 7
+      AdrianeCode   SchulzCode   CellID CellType  INX1  INX2  INX3
+            <chr>        <chr>    <chr>    <chr> <int> <int> <int>
+1        Animal 0          #01     LC01       CG 10364  7763  6416
+2        Animal 1          #11     LC01       CG 11324  7325  4678
+3        Animal 2          #21     LC01       CG  4274  2867  2592
+4        Animal 3          #31     LC01       CG  6843  6026  4370
+5        Animal 4          #41     LC01       CG 14142 11268  7212
+6        Animal 5          #51     LC01       CG 13798  9349  5822
+7        Animal 6          #61     LC01       CG 15735  9893  5896
+8        Animal 7          #71     LC01       CG 14430 11313  7435
+9        Animal 8          #81     LC01       CG  8469  6418  4565
+10       Animal 9          #91     LC01       CG   312   333   248
+11       Animal 0          #02     LC02       CG  8207  6131  5421
+12       Animal 1          #12     LC02       CG  7386  5076  3332
+13       Animal 2          #22     LC02       CG  8280  5764  5092
+14       Animal 3          #32     LC02       CG   917   865   595
+15       Animal 4          #42     LC02       CG 12767  9060  7216
+16       Animal 5          #52     LC02       CG  2329  1880  1111
+17       Animal 6          #62     LC02       CG 10674  7892  5452
+18       Animal 7          #72     LC02       CG  6572  5454  3374
+19       Animal 8          #82     LC02       CG  4534  3317  2357
+20       Animal 9          #92     LC02       CG 12517  8555  5148
+21       Animal 0          #03     LC03       CG  8010  6164  5501
+22       Animal 1          #13     LC03       CG  7593  4142   378
+23       Animal 2          #23     LC03       CG  7768  5918  4885
+24       Animal 3          #33     LC03       CG  3493  2753  1520
+25       Animal 4          #43     LC03       CG 23413 17754 11845
+26       Animal 5          #53     LC03       CG 15861 11420  6558
+27       Animal 6          #63     LC03       CG 13677 10426  7278
+28       Animal 7          #73     LC03       CG  3408  2622  1676
+29       Animal 8          #83     LC03       CG  2118  1908  1347
+30       Animal 9          #93     LC03       CG 11425  8007  4979
+31       Animal 0          #04     LC04       CG  5586  4977  3892
+32       Animal 1          #14     LC04       CG 12216  8760  5751
+33       Animal 2          #24     LC04       CG 18965 14390  9149
+34       Animal 3          #34     LC04       CG  4042  3221  2214
+35       Animal 4          #44     LC04       CG  6628  5396  3989
+36       Animal 5          #54     LC04       CG  8309  6326  4661
+37       Animal 6          #64     LC04       CG  5178  4570  2962
+38       Animal 7          #74     LC04       CG 15225 11922  7457
+39       Animal 8          #84     LC04       CG  4653  3041  2367
+40       Animal 9          #94     LC04       CG 10336  8051  5113
+41       Animal 0          #05     LC05       CG 24107 17303 13972
+42       Animal 1          #15     LC05       CG  1684  1529   796
+43       Animal 2          #25     LC05       CG 22550 14256 10462
+44       Animal 3          #35     LC05       CG  6129  5246  3662
+45       Animal 4          #45     LC05       CG 13278 10342  7258
+46       Animal 5          #55     LC05       CG 10426  8121  5109
+47       Animal 6          #65     LC05       CG  9173  7594  4812
+48       Animal 7          #75     LC05       CG  6436  5335  3513
+49       Animal 8          #85     LC05       CG  2355  1954  1481
+50       Animal 9          #95     LC05       CG 10468  7817  4772
+51    869_046 AGR      #26 AGR      AGR      STG 25364  9072  5909
+52     869_038 DG       #22 DG       DG      STG  6230  3161  2171
+53     869_039 DG       #23 DG       DG      STG 12421  5973  4241
+54     869_041 DG       #24 DG       DG      STG 22416 11344  7230
+55     869_042 DG       #25 DG       DG      STG 13681  6574  4821
+56     869_041 IC       #13 IC       IC      STG 24366  9014  6937
+57     869_042 IC       #14 IC       IC      STG  4425  2066  1171
+58     869_043 IC       #19 IC       IC      STG  6726  2806  2286
+59     869_044 IC       #20 IC       IC      STG 30068 12629 10163
+60     869_046 IC       #21 IC       IC      STG 24399  9945  7400
+61     869_040 LG        #1 LG       LG      STG 37155 13163  9031
+62     869_038 LG       #18 LG       LG      STG 14740  5689  4059
+63     869_042 LG        #2 LG       LG      STG 14910  6364  4521
+64     869_043 LG        #3 LG       LG      STG  7337  2762  1659
+65     869_045 LG        #4 LG       LG      STG 16270  7242  4853
+66     869_046 LG        #5 LG       LG      STG 21165  7736  5437
+67   869_038 LPG2      #40 LPG      LPG      STG  3878  1210   642
+68   869_039 LPG1      #41 LPG      LPG      STG  3963  1532   667
+69   869_040 LPG1      #42 LPG      LPG      STG 12903  4447  2174
+70   869_041 LPG1      #43 LPG      LPG      STG  9622   887   594
+71   869_041 LPG2      #44 LPG      LPG      STG 19064  5849  3054
+72   869_042 LPG1      #45 LPG      LPG      STG  7614  2417  1288
+73   869_042 LPG2      #46 LPG      LPG      STG  6231  1912   795
+74   869_043 LPG2      #47 LPG      LPG      STG 11122  2650  1635
+75   869_045 LPG1      #48 LPG      LPG      STG  2800  1186   526
+76   869_045 LPG2      #49 LPG      LPG      STG  2462  1202   500
+77   869_046 LPG1      #50 LPG      LPG      STG  3717  1256   574
+78     869_042 MG       #10 MG       MG      STG  2664  1096   652
+79     869_045 MG       #11 MG       MG      STG  1981   714   735
+80     869_046 MG       #12 MG       MG      STG  1544   480   433
+81 869_044 neurop #15 Neuropil neuropil      STG 55180 23294 18436
+82 869_046 neurop #17 Neuropil neuropil      STG 15551  7126  3998
+83     869_041 PY        #6 PY       PY      STG 14129  5521  3387
+84    869_045 PY1        #7 PY       PY      STG  4366  2066  1517
+85    869_045 PY2        #8 PY       PY      STG  5629  2437  1870
+86    869_045 PY3        #9 PY       PY      STG  2664  1405  1016
+
+
+5.  Plot a scatterplot of INX1 vs. INX2 for all the data combined (this is Plot 1).
+
+Made plot 1 with:
+> plot(Sorted_R_ClubINXdata$INX1, Sorted_R_ClubINXdata$INX2, xlab="INX1",ylab="INX2")
+
+
+6.  Plot a scatterplot of INX1 vs. INX2 for all the data combined, but separate the Cell Types (STG vs CG) with different colors (this is Plot 2).
+
+To add color, I used the command:
+> points(Sorted_R_ClubINXdata$CellType=="STG", col = 'red')
+but it only turned the bottom left dot the color I wanted.  Perhaps I'm not actually calling all the data.
+I tried this:
+points(Sorted_R_ClubINXdata$INX1[Sorted_R_ClubINXdata$CellType=="STG", col = 'red'], Sorted_R_ClubINXdata$INX2[Sorted_R_ClubINX2data$CellType=="CG", col = blue])
+but kept getting errors. 
+I found youtube video that used ggplot2 to make plots and add color, so I downloaded that package. 
+
+This is way easier IMO.  I made it with trianges using 2 for the shape. 
+>ggplot(data=Sorted_R_ClubINXdata, aes(x=INX1,y=INX2,color=CellType)) + geom_point(shape  = 2, size = 2)
+
+> ggplot(data=Sorted_R_ClubINXdata, aes(x=INX1,y=INX2,color=CellType)) + geom_point(shape  = 1, size = 2) + labs(title("STG vs CG Cells for INX1 and INX2"))
+Title didn't get added properly with this command.
+
+> ggplot(data=Sorted_R_ClubINXdata, aes(x=INX1,y=INX2,color=CellType)) + geom_point(shape  = 1, size = 2) + labs(title="STG vs CG Cells for INX1 and INX2")
+
+ 7.  Add regression lines to the scatterplots by Cell Type (this is Plot 3).
+> ggplot(data = Sorted_R_ClubINXdata, aes(x=INX1,y=INX2,color=CellType)) + geom_point(shape=1, size=3) + geom_smooth(method=lm, se=FALSE) + labs(title="STG vs CG Cells for INX1 vs INX2")    
+
+8.  Plot the same scatterplot, with the regression lines, but identify Cell Type (CellType) by the SHAPE of the points, and identify Cell Identity (CellID) with different colors.  (this is Plot 4)
+
+I tried:
+> ggplot(data = Sorted_R_ClubINXdata, aes(x=INX1, y=INX2, shape=CellType)) + geom_point(aes(color=CellID), size =3) + geom_smooth((method=lm), se=FALSE, aes(color=CellType)) + labs(title="STG vs CG Cells for INX1 vs INX2")
+But I kept getting this error:
+Error: ggplot2 doesn't know how to deal with data of class uneval
+
+Fixed it:
+>  ggplot(data = Sorted_R_ClubINXdata, aes(x=INX1, y=INX2, shape=CellType)) + geom_point(aes(color=Sorted_R_ClubINXdata$CellID), size =4) + geom_smooth(method=lm, se=FALSE, aes(color=CellType)) + labs(title="STG vs CG Cells for INX1 vs INX2")
+
+9.  Plot of Boxplot (box and whiskers) for INX3 separated by Cell Type (STG vs CG).  
+Color the boxes by Cell Type, and try to match the formatting of the outliers and points in my plot if you like (Plot 5).
+
+> ggplot(data= Sorted_R_ClubINXdata, aes(x= CellType, y=INX3,  fill=CellType)) + geom_boxplot(outlier.shape= 1, outlier.color="black", outlier.size = 4) + labs(title ="INX3 by Cell Type")
+
+10.  Plot Boxpots of INX2 and separate Cell Type on the X-xis, and separate by Cell ID in different colors (this is Plot 6).
+
+> ggplot(data= Sorted_R_ClubINXdata, aes(x = CellType, y=INX2, fill=CellID)) + geom_boxplot(outlier.shape=1, outlier.color="black", outlier.size= 4) + labs(title = "INX2 by Cell Type and Cell ID")
