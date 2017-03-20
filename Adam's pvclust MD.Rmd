@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+author: "Adam"
+date: "March 19, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+install.packages("pvclust")
+
+library(pvclust)
+
+#Imported datasets
+
+#Needed to get rid of 
+
+GofI_counts <- Kallisto_STG_single_cells_GofI_TPM_counts[,-1]
+
+WNS_counts <- Kallisto_STG_single_cells_TPM_counts[,-1]
+
+pv_WNS_counts <- pvclust(WNS_counts, method.hclust = "average", method.dist = "correlation", use.cor = "pairwise.complete.obs", nboot = 1000, parallel = FALSE, r=seq(0.5, 1.4, by=.1), store=FALSE, weight=FALSE, iseed=NULL, quiet=FALSE)
+
+plot(pv_WNS_counts)
+
+
+```
+
+```{r}
+
+pv_GofI_counts <- pvclust(GofI_counts, method.hclust = "average", method.dist = "correlation", use.cor = "pairwise.complete.obs", nboot = 1000, parallel = FALSE, r=seq(0.5, 1.4, by=.1), store=FALSE, weight=FALSE, iseed=NULL, quiet=FALSE)
+
+```
+
+```{r}
+plot(pv_GofI_counts)
+
+```
+
+
+```{r}
+install.packages("heatmaply")
+```
+
+```{r}
+install.packages("ComplexHeatmap")
+
+didn't work
+
+ ## try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+
+library(ComplexHeatmap)
+library(circlize)
+
+
+```
+
